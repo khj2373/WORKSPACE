@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영역관련태그</title>
+    <style>
+        div{
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+        }
+
+        span{
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+            /*인라인 요소에는 대부분 가로, 세로 길이 지정불가*/
+        }
+    </style>
+</head>
+<body>
+    <!--
+        블럭요소 : 한 줄 단위로 영역을 차지함
+                  줄바꿈이 적용되어 이미 존재하는 태그의 다음 줄에 영역이 잡힘
+                  (p, pre, "div", h...)
+
+        인라인요소 : content(내용) 영역에 해당하는 부분만 영역을 차지하는 요소
+                    줄바꿈이 적용되지 않아 다음 영역의 바로 옆으로 다음 영역이 잡힘
+                    (b, mark, s, img, "span"...)
+    -->
+
+    <h1>영역관련태그</h1>
+    <h2>div태그와 span태그의 차이점 1 : 줄바꿈 적용</h2>
+
+    <h3>div태그</h3>
+    <p>div태그는 블럭요소로 한 줄 단위로 영역을 차지(이미 존재하는 태그 다음 줄에 영역이 잡힘)</p>
+
+    <div style="background: red;">첫번째 영역</div>
+    <div style="background: green;">두번째 영역</div>
+    <div style="background: blue;">세번째 영역</div>
+
+    <h3>span태그</h3>
+    <p>span태그는 인라인 요소로 content 영역만 차지(줄바꿈이 발생되지 않고 옆으로 영역이 잡힘)</p>
+
+    <span style="background: red;">첫번째 영역</span>
+    <span style="background: green;">두번째 영역</span>
+    <span style="background: blue;">세번째 영역</span>
+
+    <h2>div태그와 span의 차이점2 : 영역지정방식</h2>
+
+    <h3>div태그 : 사각형 박스로 영역을 지정함</h3>
+    <div style="height: auto;">
+        [디지털데일리 김보민기자] 상정적격성 심사를 받은 SGA의 주식 거래가 재개됐다.
+
+        SGA(대표 은유진·박재한)는 지난 7월 한국거래소로부터 상장적격성 실질심사 대상으로 지정된 후 경영 개선 계획서를 제출했고, 기업 심사위원회에서 상장 유지가 결정됐다고 23일 밝혔다.
+
+        이에 따라 주식매매 거래도 재개됐다. 현재(10시20분 기준) SGA 주식은 전거래일 대비 29.02% 오른 542원에 거래되고 있다.
+
+        SGA는 상장 유지 결정을 계기로 경영 개선에 속도를 올리겠다고 설명했다. 솔루션 기반 시스템 구축(SI) 사업을 확대한다는 구상이다. SGA는 지난달 경기도 의왕에 그룹 통합 신사옥을 마련해 업무 효율을 높이고, 계열사와 시너지 효과를 낼 방침이다.
+
+        적자 탈피에도 집중한다. SGA는 4세대 나이스(NEIS) 사업 준비 과정에서 발생한 발주 지연, 코로나19 사태, 시스템 오픈 지연 등의 요인으로 2년 연속 적자를 기록했지만 올 하반기부터 유지보수 단계로 전한돼 수익구조가 개선될 것으로 전망했다. 올해 2사 분기 영업이익이 흑자로 전환된 점도 기대 요인으로 꼽았다.
+    </div>
+
+    <h3>span태그 : 문장 단위로 영역을 지정함</h3>
+    <span>
+        [디지털데일리 김보민기자] 상정적격성 심사를 받은 SGA의 주식 거래가 재개됐다.
+
+        SGA(대표 은유진·박재한)는 지난 7월 한국거래소로부터 상장적격성 실질심사 대상으로 지정된 후 경영 개선 계획서를 제출했고, 기업 심사위원회에서 상장 유지가 결정됐다고 23일 밝혔다.
+
+        이에 따라 주식매매 거래도 재개됐다. 현재(10시20분 기준) SGA 주식은 전거래일 대비 29.02% 오른 542원에 거래되고 있다.
+
+        SGA는 상장 유지 결정을 계기로 경영 개선에 속도를 올리겠다고 설명했다. 솔루션 기반 시스템 구축(SI) 사업을 확대한다는 구상이다. SGA는 지난달 경기도 의왕에 그룹 통합 신사옥을 마련해 업무 효율을 높이고, 계열사와 시너지 효과를 낼 방침이다.
+
+        적자 탈피에도 집중한다. SGA는 4세대 나이스(NEIS) 사업 준비 과정에서 발생한 발주 지연, 코로나19 사태, 시스템 오픈 지연 등의 요인으로 2년 연속 적자를 기록했지만 올 하반기부터 유지보수 단계로 전한돼 수익구조가 개선될 것으로 전망했다. 올해 2사 분기 영업이익이 흑자로 전환된 점도 기대 요인으로 꼽았다.
+    </span>
+
+    <hr>
+
+    <h1>iframe</h1>
+    <p>웹 문서 안에 다른 웹페이지를 추가하는 태그(인라인 요소)</p>
+    
+    <iframe src="04_이미지 및 멀티미디어태그.html" width="600" height="800" frameborder="0"></iframe>
+    <br>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/tIxLU8WUK1Y?si=u0lzz8qF7lpWQrnh" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</body>
+</html>

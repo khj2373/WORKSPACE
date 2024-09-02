@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function test(){
+            console.log("test 함수")
+            console.log(this)
+        }
+        test();
+
+        const test2 = function(){
+            console.log("test2 함수")
+            console.log(this)
+        }
+        test2();
+
+        const test3 = () => {
+            console.log("test3 함수")
+            console.log(this)
+        }
+        test3();
+    </script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js"
+        integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM=" crossorigin="anonymous"></script>
+    <style>
+        .area{
+            border: 1px solid black;
+            padding: 20px;
+            width: 600px;
+            height: 60px;
+            background: lightgrey;
+            display: none;
+        }
+        #search-title, #search-date, #search-id{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>practice5</h1>
+    <fieldset style="text-align: center;">
+        <legend>검색할 항목을 선택하세요</legend>
+        <label>
+            <input type="radio" name="opt" id="op1" value="title">
+            제목
+        </label>
+        <label>
+            <input type="radio" name="opt" id="op2" value="date">
+            날짜
+        </label>
+        <label>
+            <input type="radio" name="opt" id="op3" value="author">
+            작성자
+        </label>
+    </fieldset>
+
+    <br>
+
+    <div class="area">
+        <div id="search-title">
+            검색할 제목을 입력하세요 : <br>
+            <input type="text" size="60"> <input type="button" value="검색">
+        </div>
+        <div id="search-date">
+            검색할 날짜를 선택하세요 : <br>
+            <input type="date"> - <input type="date"> <input type="button" value="검색">
+        </div>
+        <div id="search-id">
+            검색할 작성자 아이디를 입력하세요: <br>
+            <input type="text" size="30"> <input type="button" value="검색">
+        </div>
+    </div>
+
+    <script>
+        $(':radio').on('change', function(){
+            $('.area').css('display', 'block');
+            const radioVal = $('input[name=opt]').val();
+            
+            if(radioVal === 'title'){
+                $('.area > div').css('display', 'none');
+                $('#search-title').css('display', 'block');
+            } else if(radioVal === 'date'){
+                $('.area > div').css('display', 'none');
+                $('#search-date').css('display', 'block');
+            } else {
+                $('.area > div').css('display', 'none');
+                $('#search-id').css('display', 'block');
+            }
+        })
+    </script>
+</body>
+</html>

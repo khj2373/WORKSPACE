@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.min.js"
+        integrity="sha256-Fb0zP4jE3JHqu+IBB9YktLcSjI1Zc6J2b6gTjB0LpoM=" crossorigin="anonymous"></script>
+    <style>
+        .area{
+            border: 1px solid black;
+            width: 500px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Practice4</h1>
+    <fieldset>
+        <legend>구매정보</legend>
+        <ul id="buy-info">
+            <li>구매자 : <input type="text" id="customer" placeholder="구매자의 이름을 입력하세요"></li>
+            <li>상품명 : <input type="text" id="prdName" placeholder="구매 상품명을 입력하세요"></li>
+            <li>가격 : <input type="text" id="price" placeholder="구매 가격을 입력하세요"></li>
+            <li>구매 수량 : <input type="number" id="prdQty" placeholder="최소 10" min="10" max="100" step="10" size="5"></li>
+            <li>납품 등급 : <input type="range" id="grade" min="1" max="9" step="2"></li>
+            <li>
+                기타 사항 : 
+                <textarea id="guitar" style="width: 250px; height: 130px; resize: none;"></textarea>
+            </li>
+        </ul>
+    </fieldset>
+
+    <br>
+
+    <button id="buy-btn">입력 값 출력하기</button>
+    
+    <br><br>
+
+    <div id="area1" class="area"></div>
+
+    <script>
+        $('#buy-btn').click(function(){
+            const str = ("구매자 명 : " + $('#customer').val() + "님<br>"
+                        + "상품명 : " + $('#prdName').val() + "<br>"
+                        + "가격 : " + $('#price').val() + "원<br>"
+                        + "구매 수량 : " + $('#prdQty').val() + "개<br>"
+                        + "납품등급 : " + $('#grade').val() + "등급<br>"
+                        + "기타사항  : " + $('#guitar').val() + "<br>"
+            );
+            $('#area1').html(str);
+        })
+    </script>
+</body>
+</html>

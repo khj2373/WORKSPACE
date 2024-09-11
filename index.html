@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        th{
+            text-align: left;
+        }
+
+        input{
+            border-width: 0 0 1px;
+            border-style: dashed;
+        }
+
+        div{
+            font-size: 6pt;
+            color: #727272;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <table border="0">
+        <tr>
+            <th>아이디</th>
+            <td>
+                <input type="text" id="id">
+                <div id="idm">필수 입력 항목 입니다.</div>
+            </td>
+        </tr>
+        <tr>
+            <th>패스워드</th>
+            <td>
+                <input type="password" id="pw" onfocus="passFocus()" onclick="event.stopPropagation()"><br>
+                <div id="pwm">필수 입력 항목 입니다.</div>
+                <div id="pwms">영문자 대/소문자 특수문자, 숫자 포함 8 ~ 32자</div>
+            </td>
+        </tr>
+        <tr>
+            <th>패스워드 확인</th>
+            <td>
+                <input type="password" id="pwcheck">
+                <div id="pwcm">필수 입력 항목 입니다.</div>
+            </td>
+        </tr>
+        <tr>
+            <th>이메일</th>
+            <td><input type="text">@<input type="email"></td>
+        </tr>
+        <tr>
+            <th>주소</th>
+            <td><input type="text"></td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><input type="text"></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <th colspan="2" style="text-align: center; background-color: #c5e0b4;" onclick="check()">가입</th>
+        </tr>
+    </table>
+
+    <script>
+        function passFocus(){
+            document.getElementById('pwms').style.display = 'block';
+        }
+
+        function hidePass(event){
+            if(!document.getElementById('pw').contains(event.target)) {
+                document.getElementById('pwms').style.display = 'none';
+            }
+        }
+
+        document.addEventListener('click', hidePass);
+
+        function check(){
+            const uid = document.getElementById('id').value;
+            const upw = document.getElementById('pw').value;
+            const upwc = document.getElementById('pwcheck').value;
+
+            const idm = document.getElementById('idm');
+            const pwm = document.getElementById('pwm');
+            const pwcm = document.getElementById('pwcm');
+
+            if(!uid){
+                idm.style.display = 'block';
+            } else{
+                idm.style.display = 'none';
+            }
+
+            if(!upw){
+                pwm.style.display = 'block';
+            } else{
+                pwm.style.display = 'none';
+            }
+
+            if(!upwc){
+                pwcm.style.display = 'block';
+            } else{
+                pwcm.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

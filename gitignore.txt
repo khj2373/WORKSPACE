@@ -321,4 +321,3 @@ psd
 thumb
 sketch
 6_servlet/Servers/
-7_JSP/Servers/

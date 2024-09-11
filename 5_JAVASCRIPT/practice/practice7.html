@@ -58,20 +58,37 @@
     </div>
 
     <script>
-        $(':radio').on('change', function(){
-            $('.area').css('display', 'block');
-            const radioVal = $('input[name=opt]').val();
+        // $('input[name=opt]').click(function(){
+        //     $('.area').css('display', 'block');
+        //     const radioVal = $('input[name=opt]').val();
             
-            if(radioVal === 'title'){
-                $('.area > div').css('display', 'none');
-                $('#search-title').css('display', 'block');
-            } else if(radioVal === 'date'){
-                $('.area > div').css('display', 'none');
-                $('#search-date').css('display', 'block');
-            } else {
-                $('.area > div').css('display', 'none');
-                $('#search-id').css('display', 'block');
-            }
+        //     if(radioVal === 'title'){
+        //         $('.area > div').css('display', 'none');
+        //         $('#search-title').css('display', 'block');
+        //     } else if(radioVal === 'date'){
+        //         $('.area > div').css('display', 'none');
+        //         $('#search-date').css('display', 'block');
+        //     } else {
+        //         $('.area > div').css('display', 'none');
+        //         $('#search-id').css('display', 'block');
+        //     }
+        // })
+        $('#op1').click(function(){
+            $('.area').css('display', 'block');
+            $('.area > div').css('display', 'none');
+            $('#search-title').css('display', 'block');
+        })
+
+        $('#op2').click(function(){
+            $('.area').css('display', 'block');
+            $('.area > div').css('display', 'none');
+            $('#search-date').css('display', 'block');
+        })
+
+        $('#op3').click(function(){
+            $('.area').css('display', 'block');
+            $('.area > div').css('display', 'none');
+            $('#search-id').css('display', 'block');
         })
     </script>
 </body>

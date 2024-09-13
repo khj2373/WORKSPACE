@@ -34,6 +34,7 @@
 		게시글 작성(C) - 첨부파일 업로드
 	 --%>
 	 
-	 <% JDBCTemplate.getConnection(); %>
+	 <%-- JDBCTemplate.getConnection(); --%>
+	 <%@ include file="views/common/menubar.jsp" %>
 </body>
 </html>

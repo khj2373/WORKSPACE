@@ -22,7 +22,7 @@ public class JDBCTemplate {
 		Properties prop = new Properties();
 		
 		//읽어들이고자 하는 classes 폴더내의 diver.properties파일의 물리적인 경로 가져오기
-		String filePath = JDBCTemplate.class.getResource("/db/driver.properties").getPath();
+		String filePath = JDBCTemplate.class.getResource("/db/driver/driver.properties").getPath();
 
 		try {
 			

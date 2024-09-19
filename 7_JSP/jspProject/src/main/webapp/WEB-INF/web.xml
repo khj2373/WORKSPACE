@@ -19,4 +19,54 @@
     <servlet-name>login.me</servlet-name>
     <url-pattern>/login.me</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Logout.me</display-name>
+    <servlet-name>Logout.me</servlet-name>
+    <servlet-class>com.kh.member.controller.LogoutController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Logout.me</servlet-name>
+    <url-pattern>/Logout.me</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>memberEnrollForm.me</display-name>
+    <servlet-name>memberEnrollForm.me</servlet-name>
+    <servlet-class>com.kh.member.controller.MemberEnrollFormController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>memberEnrollForm.me</servlet-name>
+    <url-pattern>/memberEnrollForm.me</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>insertMember.me</display-name>
+    <servlet-name>insertMember.me</servlet-name>
+    <servlet-class>com.kh.member.controller.MemberInsertController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>insertMember.me</servlet-name>
+    <url-pattern>/insertMember.me</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>mypage.me</display-name>
+    <servlet-name>mypage.me</servlet-name>
+    <servlet-class>com.kh.member.controller.MypageController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mypage.me</servlet-name>
+    <url-pattern>/mypage.me</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>updatePwd.me</display-name>
+    <servlet-name>updatePwd.me</servlet-name>
+    <servlet-class>com.kh.member.controller.MemberPwdUpdateController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>updatePwd.me</servlet-name>
+    <url-pattern>/updatePwd.me</url-pattern>
+  </servlet-mapping>
 </web-app>

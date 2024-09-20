@@ -113,7 +113,7 @@
             <div align="center">
                 <button type="submit" class="btn btn-sm btn-secondary">정보변경</button>
                 <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#update-pwd-modal">비밀번호 변경</button>
-                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-modal">회원탈퇴</button>
+                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#delete-member-modal">회원탈퇴</button>
             </div>
         </form>
     </div>
@@ -183,7 +183,7 @@
 	</div>
 	
 	<!-- The Modal -->
-	<div class="modal" id="delete-modal">
+	<div class="modal" id="delete-member-modal">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 
@@ -197,12 +197,13 @@
 				<div class="modal-body" align="center">
 					<form action="<%=contextPath%>/delete.me" id="update-form" method="post">
 						<input name="userId" value="<%=userId %>" type="hidden">
-						<b>회원 탈퇴 후 복구가 불가능합니다</b>
+						<b>회원 탈퇴 후 복구가 불가능합니다<br>
+						정말로 탈퇴하시겠습니까?</b>
 						<br><br>
 						비밀번호 : <input type="password" name="userPwd" required>
 						<br><br>
 						<button type="submit" class="btn btn-sm btn-danger">
-							회원탈퇴
+							탈퇴하기
 						</button>
 					</form>
 				</div>

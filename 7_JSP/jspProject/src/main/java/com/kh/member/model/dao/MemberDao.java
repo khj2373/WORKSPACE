@@ -33,7 +33,6 @@ public class MemberDao {
 		ResultSet rset = null;
 		
 		String sql = prop.getProperty("loginMember");
-		System.out.println(sql);
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -154,5 +153,52 @@ public class MemberDao {
 		}
 		
 		return m;
+	}
+	
+	public int deleteMember(Connection conn, String userId, String userPwd) {
+		//delete(update) -> 처리된 행
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int updateMember(Connection conn, Member m) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getUserName());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getAddress());
+			pstmt.setString(5, m.getInterest());
+			pstmt.setString(6, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }

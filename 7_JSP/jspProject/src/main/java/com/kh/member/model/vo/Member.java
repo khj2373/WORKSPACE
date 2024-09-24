@@ -18,7 +18,7 @@ public class Member {
 	public Member() {
 		super();
 	}
-
+	
 	public Member(int userNo, String userId, String userPwd, String userName, String phone, String email,
 			String address, String interest, Date enrollDate, Date modifyDate, String status) {
 		super();
@@ -151,6 +151,5 @@ public class Member {
 				+ ", phone=" + phone + ", email=" + email + ", address=" + address + ", interest=" + interest
 				+ ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", status=" + status + "]";
 	}
-	
-	
+
 }

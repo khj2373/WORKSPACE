@@ -19,10 +19,10 @@ import com.kh.member.model.dao.MemberDao;
 
 public class BoardDao {
 	private Properties prop = new Properties();
-
+	
 	public BoardDao() {
 		String filePath = MemberDao.class.getResource("/db/sql/board-mapper.xml").getPath();
-
+		
 		try {
 			prop.loadFromXML(new FileInputStream(filePath));
 		} catch (IOException e) {
@@ -31,7 +31,7 @@ public class BoardDao {
 	}
 	
 	public int selectListCount(Connection conn) {
-		//select -> ResultSet(한행) -> int
+		//select -> resultset(한행) -> int
 		
 		int listCount = 0;
 		
@@ -47,12 +47,14 @@ public class BoardDao {
 			if(rset.next()) {
 				listCount = rset.getInt("count");
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
+		
 		return listCount;
 	}
 	
@@ -71,6 +73,7 @@ public class BoardDao {
 			/*
 			 * currentPage : 1 -> 1~10
 			 * currentPage : 2 -> 11~20
+			 * currentPage : 3 -> 21~30
 			 */
 			
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
@@ -102,10 +105,8 @@ public class BoardDao {
 	}
 	
 	public int increaseCount(Connection conn, int boardNo) {
-		//update -> 처리된 행수 -> 트랜젝션 처리
-		
+		//update -> 처리된 행수 -> 트랜잭션처리
 		int result = 0;
-		
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("increaseCount");
@@ -120,15 +121,17 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 	
 	public Board selectBoard(Connection conn, int boardNo) {
+		//select -> ResultSet(한행) -> Board
+		
 		ResultSet rset = null;
 		Board b = null;
 		
 		PreparedStatement pstmt = null;
-		
 		String sql = prop.getProperty("selectBoard");
 		
 		try {
@@ -157,11 +160,12 @@ public class BoardDao {
 	}
 	
 	public Attachment selectAttachment(Connection conn, int boardNo) {
+		//select -> ResultSet(한행) -> Attachment
+		
 		ResultSet rset = null;
 		Attachment at = null;
 		
 		PreparedStatement pstmt = null;
-		
 		String sql = prop.getProperty("selectAttachment");
 		
 		try {
@@ -211,11 +215,12 @@ public class BoardDao {
 			close(rset);
 			close(pstmt);
 		}
+		
 		return list;
 	}
 	
 	public int insertBoard(Connection conn, Board b) {
-		//insert -> 처리된 행 수
+		//insert -> 처리된 행 수 
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -235,11 +240,12 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 	
 	public int insertAttachment(Connection conn, Attachment at) {
-		//insert -> 처리된 행 수
+		//insert -> 처리된 행 수 
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -258,15 +264,16 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 	
 	public int updateBoard(Connection conn, Board b) {
-		//update -> 처리된 행 수
+		//insert -> 처리된 행 수 
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("updatetBoard");
+		String sql = prop.getProperty("updateBoard");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -282,11 +289,12 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 	
 	public int updateAttachment(Connection conn, Attachment at) {
-		//update -> 처리된 행 수
+		//update -> 처리된 행 수 
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -306,11 +314,12 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 	
 	public int insertNewAttachment(Connection conn, Attachment at) {
-		//insert -> 처리된 행 수
+		//insert -> 처리된 행 수 
 		int result = 0;
 		
 		PreparedStatement pstmt = null;
@@ -318,11 +327,12 @@ public class BoardDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			
+		
 			pstmt.setInt(1, at.getRefBoardNo());
 			pstmt.setString(2, at.getOriginName());
 			pstmt.setString(3, at.getChangeName());
 			pstmt.setString(4, at.getFilePath());
+		
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -330,6 +340,7 @@ public class BoardDao {
 		} finally {
 			close(pstmt);
 		}
+		
 		return result;
 	}
 	
@@ -353,7 +364,6 @@ public class BoardDao {
 				b.setBoardTitle(rset.getString("board_title"));
 				b.setCount(rset.getInt("count"));
 				b.setTitleImg(rset.getString("title_img"));
-				
 				list.add(b);
 			}
 		} catch (SQLException e) {
@@ -365,4 +375,91 @@ public class BoardDao {
 		
 		return list;
 	}
+	
+	public int insertThumbnailBoard(Connection conn, Board b) {
+		//insert -> 처리된 행 수 
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertThBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setInt(3, Integer.parseInt(b.getBoardWriter()));
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public int insertAttachmentList(Connection conn, ArrayList<Attachment> list) {
+		//insert -> 처리된 행 수
+		int result = 1;
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAttachmentList");
+		
+		try {
+			for(Attachment at : list) {
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, at.getOriginName());
+				pstmt.setString(2, at.getChangeName());
+				pstmt.setString(3, at.getFilePath());
+				pstmt.setInt(4, at.getFileLevel());
+				
+				result = result * pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Attachment> selectAttachmentList(Connection conn, int boardNo) {
+		//select -> ResultSet(여러행) -> Attachment
+		
+		ResultSet rset = null;
+		ArrayList<Attachment> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				at.setFileNo(rset.getInt("file_no"));
+				at.setChangeName(rset.getString("change_name"));
+				at.setFilePath(rset.getString("file_path"));
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 }
+
+
+
+
+

@@ -63,7 +63,7 @@
 		
         <div class="list-area">
 	        <% for(Board b : list) {%>
-	            <div class="thumbnail" align="center">
+	            <div class="thumbnail" align="center" onclick="clickDetailPage(<%=b.getBoardNo() %>)">
 	                <img src="<%=contextPath %>/<%=b.getTitleImg() %>" width="200px" height=""150px alt="썸네일 이미지">
 	                <p>
 	                    <span>No. <%=b.getBoardNo() %></span>
@@ -73,5 +73,11 @@
 	        <%} %>
         </div>
     </div>
+    <!-- jsp/detail.th -->
+    <script>
+        function clickDetailPage(boardNo){
+            location.href = "<%=contextPath%>/detail.th?bno=" + boardNo;
+        }
+    </script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.kh.board.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.fileupload2.core.DiskFileItemFactory;
@@ -19,15 +20,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class BoardInsertController
+ * Servlet implementation class ThumbnailInsertController
  */
-public class BoardInsertController extends HttpServlet {
+public class ThumbnailInsertController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardInsertController() {
+    public ThumbnailInsertController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,15 +37,9 @@ public class BoardInsertController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		
-		//일반방식이 아닌 multipart/form-date로 전송하는 경우 request로부터 값 추출 불가
-		//String boardTitle = request.getParameter("title");
-		//System.out.println(boardTitle);
-		 
+		request.setCharacterEncoding("UTF-8");	 
 		
 		//enctype이 multipart/form-data로 전송이 되었는지 체크
-		System.out.println(JakartaServletFileUpload.isMultipartContent(request));
 		if(JakartaServletFileUpload.isMultipartContent(request)) {
 		
 			//1. 파일용량제한(byte)
@@ -52,7 +47,7 @@ public class BoardInsertController extends HttpServlet {
 			int requestMaxSize = 1024 * 1024 * 20; // 20mb
 			
 			//2. 전달된 파일을 저장시킬 폴더경로가져오기
-			String savePath = request.getServletContext().getRealPath("/resources/board_upfle/");
+			String savePath = request.getServletContext().getRealPath("/resources/thumbnail_upfile/");
 			
 			//3.DiskFileItemFactory(파일을 임시로 저장) 객체 생성
 			DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
@@ -68,7 +63,7 @@ public class BoardInsertController extends HttpServlet {
 			
 			//추가할 데이터
 			Board b = new Board();
-			Attachment at = null;
+			ArrayList<Attachment> list = new ArrayList<>();
 			
 			//반복문을 통해 파일과 파라미터 정보획득
 			for(FileItem item : formItems) {
@@ -77,9 +72,6 @@ public class BoardInsertController extends HttpServlet {
 					switch(item.getFieldName()) {
 					case "userName":
 						b.setBoardWriter(item.getString(Charset.forName("utf-8")));
-						break;
-					case "category":
-						b.setCategory(item.getString(Charset.forName("utf-8")));
 						break;
 					case "title":
 						b.setBoardTitle(item.getString(Charset.forName("utf-8")));
@@ -100,24 +92,31 @@ public class BoardInsertController extends HttpServlet {
 						File f = new File(savePath, changeName);
 						item.write(f.toPath()); //지정한 경로에 파일 업로드
 						
-						at = new Attachment();
+						Attachment at = new Attachment();
 						at.setOriginName(originName);
 						at.setChangeName(changeName);
-						at.setFilePath("resources/board_upfle/");
+						at.setFilePath("resources/thumbnail_upfile/");
+						
+						int fileLevel = item.getFieldName().equals("file1") ? 1 : 2;
+						at.setFileLevel(fileLevel);
+						
+						list.add(at);
 					}
 				}
 			}
 			
-			int result = new BoardService().insertBoard(b, at);
+			int result = new BoardService().insertThumbnailBoard(b, list);
+			
 			if(result > 0) { //성공 -> 게시글 목록(jsp/list.bo?cage=1)
-				request.getSession().setAttribute("alertMsg", "일반게시글 작성 성공");
-				response.sendRedirect(request.getContextPath() + "/list.bo?cpage=1");
+				request.getSession().setAttribute("alertMsg", "사진게시글 작성 성공");
+				response.sendRedirect(request.getContextPath() + "/list.th");
 			} else { //실패 -> 업로드된 파일 삭제해주고 에러페이지
-				 if(at != null) {
+				 
+				 for(Attachment at : list) {
 					 new File(savePath + at.getChangeName()).delete();
 				 }
 				 
-				 request.setAttribute("errorMsg", "일반게시글 작성 실패");
+				 request.setAttribute("errorMsg", "사진게시글 작성 실패");
 				 request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 			}
 		}

@@ -94,4 +94,9 @@
 			AND FILE_LEVEL = 1
 		ORDER BY BOARD_NO DESC
 	</entry>
+	<entry key="idCheck">
+		SELECT COUNT(*) "COUNT"
+			FROM MEMBER
+		WHERE USER_ID = ?
+	</entry>
 </properties>

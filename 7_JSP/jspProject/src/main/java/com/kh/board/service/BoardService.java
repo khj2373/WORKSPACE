@@ -38,10 +38,9 @@ public class BoardService {
 		Connection conn = getConnection();
 		
 		BoardDao bDao = new BoardDao();
-		int result = new BoardDao().increaseCount(conn, boardNo);
+		int result = bDao.increaseCount(conn, boardNo);
 		
 		Board b = null;
-		
 		if(result > 0) {
 			commit(conn);
 			b = bDao.selectBoard(conn, boardNo);
@@ -71,6 +70,7 @@ public class BoardService {
 		return list;
 	}
 	
+	
 	public int insertBoard(Board b, Attachment at) {
 		Connection conn = getConnection();
 		BoardDao bDao = new BoardDao();
@@ -79,7 +79,7 @@ public class BoardService {
 		int result2 = 1;
 		
 		if(at != null) {
-			bDao.insertAttachment(conn, at);
+			result2 = bDao.insertAttachment(conn, at);
 		}
 		
 		if(result1 > 0 && result2 > 0) {
@@ -87,7 +87,7 @@ public class BoardService {
 		} else {
 			rollback(conn);
 		}
-		close(conn);
+	
 		return result1 * result2;
 	}
 	
@@ -95,7 +95,7 @@ public class BoardService {
 		Connection conn = getConnection();
 		
 		Board b = new BoardDao().selectBoard(conn, boardNo);
-		
+	
 		close(conn);
 		
 		return b;
@@ -108,11 +108,10 @@ public class BoardService {
 		int result1 = bDao.updateBoard(conn, b);
 		
 		int result2 = 1;
-		
-		if(at != null) {// 첨부파일이 있을 때
-			if(at.getFileNo() != 0) { //기존 첨부파일이 있을 때 -> update
+		if(at != null) { //첨부파일이 있을 때
+			if(at.getFileNo() != 0) { //기존첨부파일이 있을 때 -> update
 				result2 = bDao.updateAttachment(conn, at);
-			} else { //기존 첨부파일이 없을 때 -> insert
+			} else {//기존첨부파일 없을 때 -> insert
 				result2 = bDao.insertNewAttachment(conn, at);
 			}
 		}
@@ -122,6 +121,7 @@ public class BoardService {
 		} else {
 			rollback(conn);
 		}
+		
 		close(conn);
 		return result1 * result2;
 	}
@@ -134,4 +134,38 @@ public class BoardService {
 		
 		return list;
 	}
+	
+	public int insertThumbnailBoard(Board b, ArrayList<Attachment> list) {
+		Connection conn = getConnection();
+		
+		BoardDao bDao = new BoardDao();
+		int result1 = bDao.insertThumbnailBoard(conn, b);
+		int result2 = bDao.insertAttachmentList(conn, list);
+		
+		if(result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+				
+		close(conn);
+		
+		return result1 * result2;
+	}
+	
+	public ArrayList<Attachment> selectAttachmentList(int boardNo){
+		Connection conn = getConnection();
+		
+		ArrayList<Attachment> list = new BoardDao().selectAttachmentList(conn, boardNo);
+		close(conn);
+		
+		return list;
+	}
 }
+
+
+
+
+
+
+

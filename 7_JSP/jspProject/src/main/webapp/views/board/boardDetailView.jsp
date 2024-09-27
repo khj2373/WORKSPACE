@@ -83,6 +83,96 @@
                 <a href="" class="btn btn-sm btn-danger">삭제하기</a>
             <% } %>
         </div>
+
+        <br>
+
+        <div id="reply-area">
+            <table align="center">
+                <thead>
+                    <tr>
+                        <th>댓글작성</th>
+                        <% if(loginUser != null) { %>
+	                        <td>
+	                            <textarea id="reply-content" style="resize: none;" cols="50" rows="3"></textarea>
+	                        </td>
+	                        <td>
+	                            <button onclick="insertReply()">댓글등록</button>
+                        </td>
+                        <% } else { %>
+	                        <td>
+	                            <textarea id="reply-content" style="resize: none;" cols="50" rows="3" readonly></textarea>
+	                        </td>
+	                        <td>
+	                            <button onclick="insertReply()" disabled>댓글등록</button>
+	                        </td>
+                        <%} %>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td align="center"><div class="spinner-border"></div></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <script>
+            	window.onload = function(bno){
+            		selectReplyList();
+                    setInterval(selectReplyList, 2000);
+            	}
+
+                function selectReplyList(){
+                    const boardNo = <%= b.getBoardNo()%>
+                    console.log("댓글 조회용 ajax호출")
+            		$.ajax({
+                        url: "rlist.bo",
+                        contentType: "application/json",
+                        data: {
+                            bno: <%= b.getBoardNo()%>
+                        },
+                        success: function(res){
+                            console.log("댓글 조회용 ajax결과 도착")
+                            let str = "";
+                            for(let reply of res){
+                                str += ("<tr>" +
+                                        "<td>" + reply.replyWriter + "</td>" +
+                                        "<td>" + reply.replyContent + "</td>" +
+                                        "<td>" + reply.createDate + "</td>" +
+                                        "</tr>")
+                            }
+
+                            const replyBody = document.querySelector("#reply-area tbody");
+                            replyBody.innerHTML = str;
+                        },
+                        error: function(){
+                            console.log("댓글 조회용 ajax통신 실패")
+                        }
+                    })
+                }
+                function insertReply(){
+                    const boardNo = <%= b.getBoardNo()%>;
+                    const contentArea = document.querySelector("#reply-content");
+
+                    $.ajax({
+                        url : "rinsert.bo",
+                        type : "post",
+                        data : {
+                            bno : boardNo,
+                            content : contentArea.value
+                        },
+                        success : function(){
+                            contentArea.value = "";
+                            selectReplyList();
+                        },
+                        error : function(){
+                            console.log("댓글 작성 중 ajax통신 실패")
+                        }
+                    })
+                }
+            </script>
+        </div>
     </div>
 </body>
 </html>

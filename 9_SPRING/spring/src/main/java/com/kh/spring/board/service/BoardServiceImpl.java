@@ -40,4 +40,14 @@ public class BoardServiceImpl implements BoardService {
 	public Board selectBoard(int boardNo) {
 		return boardDao.selectBoard(sqlSession, boardNo);
 	}
+
+	@Override
+	public int insertBoard(Board b) {
+		return boardDao.insertBoard(sqlSession, b);
+	}
+
+	@Override
+	public int updateBoard(Board b) {
+		return boardDao.updateBoard(sqlSession, b);
+	}
 }

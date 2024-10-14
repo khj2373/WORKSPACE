@@ -18,4 +18,10 @@ public interface BoardService {
 	
 	//게시글 불러오기
 	Board selectBoard(int boardNo);
+	
+	//게시글 삽입(insert)
+	int insertBoard(Board b);
+	
+	//게시글 수정(update)
+	int updateBoard(Board b);
 }

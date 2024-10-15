@@ -1,10 +1,7 @@
 package com.kh.spring.board.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.board.service.BoardService;
 import com.kh.spring.common.template.Template;
 import com.kh.spring.common.vo.PageInfo;
@@ -119,5 +119,26 @@ public class BoardController {
 			m.addAttribute("errorMsg", "게시글 작성 실패");
 			return "common/errorPage";
 		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rlist.bo", produces="application/json; charset-UTF-8")
+	public String ajaxSelectReplyList(int bno) {
+		ArrayList<Reply> list = boardService.selectReply(bno);
+		
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping("rinsert.bo")
+	public String ajaxInsertReply(Reply r) {
+		//성공했을때 success, 실패 fail
+		return boardService.insertReply(r) > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="topList.bo", produces="application/json; charset-UTF-8")
+	public String ajaxTopBoardList() {
+		return  new Gson().toJson(boardService.selectTopBoardList());
 	}
 }

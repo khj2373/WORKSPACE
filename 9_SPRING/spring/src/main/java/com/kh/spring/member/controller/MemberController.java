@@ -1,5 +1,7 @@
 package com.kh.spring.member.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,7 +144,7 @@ public class MemberController {
 	
 	//2. 스프링에서 제공하는 ModelAndView객체를 이용하면 데이터를 담고 리턴형식까지 지정할 수 있음
 	@RequestMapping("login.me")
-	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv) {
+	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv, String saveId, HttpServletResponse response) {
 
 //		if(loginMember == null) {
 //			System.out.println("로그인 실패");
@@ -178,6 +180,13 @@ public class MemberController {
 			mv.addObject("errorMsg", "비밀번호가 일치하지 않습니다.");
 			mv.setViewName("common/errorPage");
 		} else {
+			Cookie ck = new Cookie("saveId", loginMember.getUserId());
+			if(saveId == null) {
+				ck.setMaxAge(0);
+			}
+			
+			response.addCookie(ck);
+			
 			session.setAttribute("loginUser", loginMember);
 			
 			mv.setViewName("redirect:/");

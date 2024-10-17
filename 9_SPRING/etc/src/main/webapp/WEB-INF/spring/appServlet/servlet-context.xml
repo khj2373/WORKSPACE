@@ -24,7 +24,7 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.kh.etc" />
-	 
-	<!-- @Aspect 및 하위 어노테이션 활성화 -->
+	
 	<aop:aspectj-autoproxy />
+	
 </beans:beans>

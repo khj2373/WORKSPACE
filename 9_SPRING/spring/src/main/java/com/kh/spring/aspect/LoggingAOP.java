@@ -70,7 +70,7 @@ public class LoggingAOP {
 	
 	@AfterReturning(value="cut()", returning="obj")
 	public void afterReturn(JoinPoint joinPoint, Object obj) {
-		log.info("====================== END ======================");
+		log.info("======================= END =======================");
 		log.info("Object      :   " + obj);
 	}
 	

@@ -28,7 +28,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body onload="init()">
 	<h1>실시간 대기오염 정보</h1>
 
     지역 :
@@ -39,11 +39,11 @@
         <option>부산</option>
     </select>
 
-    <button id="btn1" class="btn btn-sm btn-primary" onclick="getAirStatusHandler">해당지역 대기오염 정보</button>
+    <button id="btn1" class="btn btn-sm btn-primary" onclick="getAirStatusHandler()">해당지역 대기오염 정보</button>
 
     <br><br>
 
-    <table class="table">
+    <table class="table" id="result">
         <thead>
             <tr>
                 <th>측정소명</th>
@@ -61,12 +61,18 @@
     </table>
 
     <script>
+        function init(){
+			document.getElementById("btn1").click();
+		}
+
         function getAirStatusHandler(){
             //지역명 포함해서 서버로 ajax요청
             const location = document.querySelector("#location").value;
 
-            getAirStatus({location: location}, function(result){
+            getAirStatus({location: location}, function(airStatusList){
+                const itemList = airStatusList.response.body.items;
 
+                drawAirBody(document.querySelector("#result tbody"), itemList)
             })
         }
 
@@ -74,13 +80,29 @@
             $.ajax({
                 url: "air",
                 data: data,
-                success : (result){
+                success : function(result){
                     callback(result)
                 },
                 error: function(){
                     console.log("대기정보 api 요청 실패")
                 }
             })
+        }
+
+        function drawAirBody(parent, itemArr){
+            parent.innerHTML = "";
+
+            for(const item of itemArr){
+                parent.innerHTML += ("<tr>"
+                                        + "<td>" + item.stationName + "</td>"
+                                        + "<td>" + item.dataTime + "</td>"
+                                        + "<td>" + item.khaiValue + "</td>"
+                                        + "<td>" + item.pm10Value + "</td>"
+                                        + "<td>" + item.coValue + "</td>"
+                                        + "<td>" + item.noValue + "</td>"
+                                        + "<td>" + item.o3Value + "</td>"
+                                    + "<td>")
+            }
         }
     </script>
 </body>

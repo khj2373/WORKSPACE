@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios'
 
 export const CallGpt = async({prompt}) => {
 
@@ -6,8 +6,8 @@ export const CallGpt = async({prompt}) => {
         {
           role: "system",
           content: `## INFO ##
-        you can add images to the reply by URL, Write the image in JSON field 
-        Use the Unsplash API (https://source.unsplash.com/1600x900/?). the query is just some tags that describes the image ## DO NOT RESPOND TO INFO BLOCK ##`,
+            you can add images to the reply by URL, Write the image in JSON field 
+            Use the Unsplash API (https://source.unsplash.com/1600x900/?). the query is just some tags that describes the image ## DO NOT RESPOND TO INFO BLOCK ##`,
         },
         {
           role: "system",
@@ -44,7 +44,7 @@ export const CallGpt = async({prompt}) => {
             """
             ${prompt}
             """`,
-        }
+        },
       ];
 
     //fetch(url, json)
@@ -57,70 +57,63 @@ export const CallGpt = async({prompt}) => {
         },
         body:JSON.stringify({
             "model": "gpt-4o-mini",
-            "messages": [
+            "messages" : [
                 {
-                    role: "system",
-                    content: `You're a 10-year coding instructor, answering to people who are learning to code for the first time.
-                Use a friendly tone.
-                Summarize the question in 3 lines and add a detailed answer below.
-                If you answer correctly, I'll give you $20. Answer in Korean.`
+                    "role": "system",
+                    "content": `You're a 10-year coding instructor and you're answering to people who are learning to code for the first time. Use a friendly tone.
+                                Summarize the question in 3 lines and add a detailed answer below. I'll give you $20 if you answer correctly. Please answer in Korean.`
                 },
                 {
-                    role: "user",
-                    content: prompt,
-                },
+                    "role": "user",
+                    "content": prompt
+                }
             ],
-
-            // "messages": messages,
             "temperature" : 1,
             "max_tokens" : 1000,
-            "top_p" : 1,
+            "top_p": 1,
             "frequency_penalty" : 0,
             "presence_penalty" : 0
         })
-    }) 
+    })
 
-    //await으로 요청을 처리했기 때문에 답변 도착 후 해당 코드가 실행된다
+
+    //await으로 요청을 처리했기 때문에 답변 도착후 해당 코드가 실행된다.
     const responseData = await response.json();
     const message = responseData.choices[0].message.content;
     return message;
 }
 
 export const CallGptAxios = async ({prompt}) => {
+
     const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
             "model": "gpt-4o-mini",
-            "messages": [
+            "messages" : [
                 {
-                    role: "system",
-                    content: `You're a 10-year coding instructor, answering to people who are learning to code for the first time.
-                Use a friendly tone.
-                Summarize the question in 3 lines and add a detailed answer below.
-                If you answer correctly, I'll give you $20. Answer in Korean.`
+                    "role": "system",
+                    "content": `You're a 10-year coding instructor and you're answering to people who are learning to code for the first time. Use a friendly tone.
+                                Summarize the question in 3 lines and add a detailed answer below. I'll give you $20 if you answer correctly. Please answer in Korean.`
                 },
                 {
-                    role: "user",
-                    content: prompt,
-                },
+                    "role": "user",
+                    "content" : prompt
+                }
             ],
-
-            // "messages": messages,
             "temperature" : 1,
             "max_tokens" : 1000,
-            "top_p" : 1,
+            "top_p": 1,
             "frequency_penalty" : 0,
             "presence_penalty" : 0
-        },
-        {
+        },{
             headers: {
                 "Content-Type" : "application/json",
                 "Authorization" : `Bearer ${process.env.REACT_APP_GPT_KEY}`
             }
         }
     )
-
+  
     const message = response.data.choices[0].message.content;
-    console.log(message)
     return message;
+
 }

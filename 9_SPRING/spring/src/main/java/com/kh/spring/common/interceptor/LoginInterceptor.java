@@ -15,7 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 	 * -로그인 유/무판단, 회원권한체크
 	 * 
 	 * preHandle(전처리) : DispatcherServlet이 컨트롤러를 호출하기 전에 낚아채는 영역
-	 * postHandle(후처리 : 컨트롤러에서 요청 후 DispatcherServlet으로 view정보를 리턴하는 순간 낚아채는 영역
+	 * postHandle(후처리) : 컨트롤러에서 요청 후 DispatcherServlet으로 view정보를 리턴하는 순간 낚아채는 영역
 	 */
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

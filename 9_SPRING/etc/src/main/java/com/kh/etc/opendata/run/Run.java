@@ -8,13 +8,13 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class Run {
-	public static final String SERVICE_KEY = "bYzy%2FtI5HWyhhmM1xluWrsyIwTpkUhJoFYWwha3QarWzJx3Pk9JIhzV50TiEojGuY6Nu8%2FWtoHAfp0IPnZiP%2Bg%3D%3D";
+	public static final String SERVICE_KEY = "1N04MF9up5vJFd3WhqDoPksp7io%2BDDYpJTcgyRxZKTM5%2FSfCll4%2F5V9j2N4%2FYlknKP0oar%2FfTUM%2BAZiK3Jlm9A%3D%3D";
 	
 	public static void main(String[] args) throws IOException {
-		String url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty";
+		String url = "http://apis.data.go.kr/1741000/EarthquakeIndoors3/getEarthquakeIndoors3List";
 		url += "?serviceKey=" + SERVICE_KEY;
 		url += "&returnType=json";
-		url += "&sidoName=" + URLEncoder.encode("서울", "UTF-8"); //요청값에 한글이 있으면 인코딩 작업 후 전송
+		url += "&numOfRows=2"; //요청값에 한글이 있으면 인코딩 작업 후 전송
 		
 		//System.out.println(url);
 		
@@ -38,6 +38,10 @@ public class Run {
 		while((line = br.readLine()) != null) {
 			result += line;
 		}
+		
 		System.out.println(result);
+		
+		br.close();
+		urlConnection.disconnect();
 	}
 }

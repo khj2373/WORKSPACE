@@ -15,6 +15,6 @@ public class ResponseTestServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("name", req.getParameter("name"));
 
-        req.getRequestDispatcher("/WEB-INF/views/responseTest.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/resposneTest.jsp").forward(req, resp);
     }
 }
